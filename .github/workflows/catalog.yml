@@ -1,0 +1,28 @@
+name: Catalog
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - run: npm test
+      - run: npm run check:releases
+        env:
+          CATALOG_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+      - run: npm run build
+      - run: git diff --exit-code -- catalog/v1.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: marketplace-site
+          path: dist

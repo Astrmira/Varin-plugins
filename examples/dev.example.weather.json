@@ -1,0 +1,11 @@
+{
+  "id": "dev.example.weather",
+  "displayName": "Weather",
+  "description": "A short description of what the extension does.",
+  "author": "Example author",
+  "categories": ["Utilities"],
+  "keywords": ["forecast"],
+  "icon": "assets/dev.example.weather.svg",
+  "repository": "https://github.com/example/weather",
+  "source": { "kind": "github-release", "specifier": "example/weather", "display": "example/weather" }
+}
