@@ -9,11 +9,15 @@
     "validate": "node scripts/catalog.mjs validate",
     "build": "node scripts/catalog.mjs build",
     "test": "node --test scripts/*.test.mjs",
-    "check:releases": "node scripts/check-releases.mjs"
+    "check:releases": "node scripts/check-releases.mjs",
+    "test:site": "npm run build && node scripts/site.browser.mjs"
   },
   "dependencies": {
     "semver": "^7.8.5",
     "tar": "^7.5.22"
   },
-  "license": "AGPL-3.0-only"
+  "license": "AGPL-3.0-only",
+  "devDependencies": {
+    "playwright": "1.57.0"
+  }
 }

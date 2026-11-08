@@ -15,6 +15,19 @@ npm run build
 python3 -m http.server 8080 --directory dist
 ```
 
+### 网页交互验证
+
+网页保持零运行时框架依赖，仅从 `/catalog/v1.json` 读取已收录条目。支持名称、ID、关键词、用途、作者和来源搜索，来源/用途筛选，名称/作者排序，分享筛选 URL，以及深色、浅色与系统主题。详情中的安装链接沿用 Varin 的 `varin://extensions/install` 协议，打开链接不等于批准安装。
+
+```sh
+npx playwright install --with-deps chromium
+npm run test:site
+```
+
+浏览器回归覆盖真实空目录、仅测试用条目、筛选与历史导航、详情焦点/关闭、复制成功/失败、错误重试、移动端和主题。可设置 `CHROMIUM_PATH` 使用已有 Chromium，设置 `SCREENSHOT_DIR` 保存本次测试截图；测试数据通过浏览器路由注入，不写入或发布到目录。现有 CI 继续执行目录与发行校验；浏览器回归可单独运行，不改变站点部署流程。
+
+开发者区的“收录资料预检”只在浏览器内检查 JSON 基础结构，不上传输入，不宣称验证发行、SemVer 范围、图标文件、完整扩展契约或代码安全。最终校验仍是 `npm run validate` 与 `npm run check:releases`。
+
 构建生成 `dist/` 和已提交的 `catalog/v1.json`。网页、目录和图标来自同一份资料。目录 `contentVersion` 覆盖展示资料与图标内容；协议入口为 `/catalog/v1.json`。Varin 初始默认读取 GitHub raw 上同一文件，因此不依赖尚未确认的站点域名。
 
 作者发版不需要修改本仓库，也不会触发站点重建。应用只在安装预览、安装或检查已安装插件更新时访问作者发行来源。市场浏览只读取静态目录和资源。
